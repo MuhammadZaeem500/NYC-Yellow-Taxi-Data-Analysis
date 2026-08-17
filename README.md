@@ -57,7 +57,6 @@ Exploratory Data Analysis
 Data Visualization
 Feature Engineering
 Statistical Analysis
-Regression
 Classification
 Machine Learning
 Pandas
