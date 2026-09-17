@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Yellow Taxi Fare & Payment Predictor | ML Portfolio</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 selection:bg-indigo-500 selection:text-white">
+
+    <!-- Main Container -->
+    <div class="max-w-2xl w-full bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 p-8 rounded-3xl shadow-2xl shadow-indigo-500/5">
+        
+        <!-- Header Section -->
+        <header class="mb-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-4 tracking-wide uppercase">
+                <span>NYC Taxi</span>
+                <span>•</span>
+                <span>R²: 0.946</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                NYC Yellow Taxi <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Predictor</span>
+            </h1>
+            <p class="text-zinc-400 text-sm mt-2 max-w-md mx-auto">
+                An end-to-end machine learning web application powered by a FastAPI backend and Scikit-Learn regression models.
+            </p>
+        </header>
+
+        <!-- Prediction Form -->
+        <form id="prediction-form" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">Trip Distance (miles)</label>
+                    <input type="number" step="0.1" id="trip_distance" placeholder="e.g. 2.5" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">Trip Duration (minutes)</label>
+                    <input type="number" step="0.1" id="trip_duration" placeholder="e.g. 15" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">Passenger Count</label>
+                    <input type="number" id="passenger_count" value="1" min="1" max="6" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">Pickup Hour (0-23)</label>
+                    <input type="number" id="pickup_hour" placeholder="e.g. 14" min="0" max="23" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">Rate Code ID</label>
+                    <input type="number" id="ratecode_id" value="1" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                </div>
+            </div>
+
+            <button type="submit" id="submit-btn"
+                class="w-full mt-2 bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-zinc-950 font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2">
+                <span>Run Prediction Model</span>
+            </button>
+        </form>
+
+        <!-- Results Card (Hidden by Default) -->
+        <div id="result-box" class="mt-8 hidden bg-zinc-950 border border-indigo-500/30 p-6 rounded-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 to-cyan-500"></div>
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-4">Model Inference Results</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-zinc-900/60 p-4 rounded-xl border border-zinc-800/80">
+                    <p class="text-xs text-zinc-400 mb-1">Estimated Fare</p>
+                    <p id="fare-output" class="text-2xl font-bold text-indigo-400">$0.00</p>
+                </div>
+                <div class="bg-zinc-900/60 p-4 rounded-xl border border-zinc-800/80">
+                    <p class="text-xs text-zinc-400 mb-1">Predicted Payment Type</p>
+                    <p id="payment-output" class="text-lg font-semibold text-cyan-400">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Portfolio Link -->
+        <footer class="mt-8 pt-6 border-t border-zinc-800/80 text-center flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-2">
+            <p>Developed with FastAPI & Scikit-Learn</p>
+            <a href="https://github.com/MuhammadZaeem500/NYC-Yellow-Taxi-Data-Analysis" target="_blank" class="hover:text-indigo-400 transition-colors flex items-center gap-1">
+                <span>View GitHub Repository</span>
+                <span>↗</span>
+            </a>
+        </footer>
+    </div>
+
+    <!-- Script Handling API Communication & UI States -->
+    <script>
+        const paymentMap = {
+            1: 'Credit Card',
+            2: 'Cash',
+            3: 'No Charge',
+            4: 'Dispute',
+            5: 'Unknown',
+            6: 'Voided Trip'
+        };
+
+        document.getElementById('prediction-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 text-zinc-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Processing Model...</span>
+            `;
+
+            const payload = {
+                trip_distance: parseFloat(document.getElementById('trip_distance').value),
+                passenger_count: parseInt(document.getElementById('passenger_count').value),
+                pickup_hour: parseInt(document.getElementById('pickup_hour').value),
+                trip_duration: parseFloat(document.getElementById('trip_duration').value),
+                ratecode_id: parseInt(document.getElementById('ratecode_id').value)
+            };
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.detail || 'Server error during prediction.');
+                }
+
+                const data = await response.json();
+
+                // Format outputs
+                document.getElementById('fare-output').innerText = `$${data.predicted_fare.toFixed(2)}`;
+                
+                const paymentLabel = paymentMap[data.predicted_payment_type] || `Code (${data.predicted_payment_type})`;
+                document.getElementById('payment-output').innerText = paymentLabel;
+                
+                // Reveal result box smoothly
+                const resultBox = document.getElementById('result-box');
+                resultBox.classList.remove('hidden');
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            } catch (err) {
+                alert('Error: ' + err.message);
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+    </script>
+</body>
+</html>
