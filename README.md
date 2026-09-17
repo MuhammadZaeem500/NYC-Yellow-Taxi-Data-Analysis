@@ -11,7 +11,7 @@ An end-to-end data science and full-stack machine learning web application analy
 
 | Main Interface | Cash Payment Prediction | Credit Card Payment Prediction |
 | :---: | :---: | :---: |
-| ![Application UI](Application%20UI.jpg) | ![Cash Payment](Cash%20Payment.jpg) | ![Credit Card Payment](Credit%20Card%20Payment.jpg) |
+| ![Application UI](/images/Application%20UI.png) | ![Cash Payment](./images/Cash%20Payment.png) | ![Credit Card Payment](/images/Credit%20Card%20Payment.png) |
 
 ---
 
@@ -72,7 +72,7 @@ The raw dataset underwent rigorous data cleansing and feature engineering before
 ### Data Distribution Comparison
 | Before Cleaning — Raw Data | After Cleaning — Clean Data |
 | :---: | :---: |
-| ![EDA Before Cleaning Distributions](EDA%20Before%20Cleaning%20Distributions.png) | ![EDA After Cleaning Distributions](EDA%20After%20Cleaning%20Distributions.png) |
+| ![EDA Before Cleaning Distributions](/images/EDA%20Before%20Cleaning%20Distributions.png) | ![EDA After Cleaning Distributions](/images/EDA%20After%20Cleaning%20Distributions.png) |
 
 ---
 
@@ -88,15 +88,15 @@ Exploratory Data Analysis (EDA) was performed to uncover key patterns and behavi
 ### Key Analytical Visualizations
 | Number of Trips by Hour | Payment Method Distribution |
 | :---: | :---: |
-| ![Trips By Hour Of Day](Trips%20By%20Hour%20Of%20Day.png) | ![Payment Method Distribution](Payment%20Method%20Distribution.png) |
+| ![Trips By Hour Of Day](/images/Trips%20By%20Hour%20Of%20Day.png) | ![Payment Method Distribution](/images/Payment%20Method%20Distribution.png) |
 
 | Trip Distance vs Fare Amount | Average Fare by Passenger Count |
 | :---: | :---: |
-| ![Trip Distance Vs Fare Amount](Trip%20Distance%20Vs%20Fare%20Amount.png) | ![Average Fare By Passenger Count](Average%20Fare%20By%20Passenger%20Count.png) |
+| ![Trip Distance Vs Fare Amount](/images/Trip%20Distance%20Vs%20Fare%20Amount.png) | ![Average Fare By Passenger Count](/images/Average%20Fare%20By%20Passenger%20Count.png) |
 
 | Average Trip Duration by Hour | Average Total Amount by Rate Code |
 | :---: | :---: |
-| ![Average Trip Duration By Hour](Average%20Trip%20Duration%20By%20Hour.png) | ![Average Total Amount By Rate Code](Average%20Total%20Amount%20By%20Rate%20Code.png) |
+| ![Average Trip Duration By Hour](/images/Average%20Trip%20Duration%20By%20Hour.png) | ![Average Total Amount By Rate Code](/images/Average%20Total%20Amount%20By%20Rate%20Code.png) |
 
 ---
 
